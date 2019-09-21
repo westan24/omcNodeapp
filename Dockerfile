@@ -9,14 +9,14 @@ RUN apt-get update
 RUN apt-get install vim -y
 RUN apt-get install iputils-ping net-tools -y
 RUN apt-get install mongodb -y
-RUN unzip omcNodejs.zip 
-RUN unzip 1.45_APM_289.zip
+RUN unzip omcNodejs.zip -d omcNodejs
+RUN unzip 1.45_APM_289.zip -d 1.45_APM_289
 
 WORKDIR /usr/src/omcNodejs/1.45_APM_289
 COPY registrationKey.txt ./
 
 RUN chmod 775 ./ProvisionApmNodeAgent.sh
-RUN bash ./ProvisionApmNodeAgent.sh -regkey-file registrationKey.txt -no-prompt  -no-wallet -h do-not-use
+RUN bash ./ProvisionApmNodeAgent.sh -regkey-file ./registrationKey.txt -no-prompt  -no-wallet -h do-not-use
 
 ENV  NODE_PATH=/usr/local/lib/node_modules
 EXPOSE 8080
